@@ -1,0 +1,148 @@
+package org.example;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class StudentCrudOperationApi {
+
+        static class Student {
+            int id;
+            String name;
+            int age;
+            String gender;
+            int marks;
+            String email;
+            int standard;
+
+            Student(int id, String name, int age, String gender, int marks, String email, int standard) {
+                this.id = id;
+                this.name = name;
+                this.age = age;
+                this.gender = gender;
+                this.marks = marks;
+                this.email = email;
+                this.standard = standard;
+            }
+
+            public String toString() {
+                return "ID: " + id + ", Name: " + name + ", Age: " + age + ", Gender: " + gender + ", Marks: " + marks +
+                        ", Email: " + email + ", Standard: " + standard;
+            }
+        }
+
+        static Map<Integer, Student> students = new HashMap<>();
+        static int nextId = 1;
+        static Scanner scanner = new Scanner(System.in);
+
+        public static void main(String[] args) {
+            while (true) {
+                System.out.println("\n1. Add\n2. View\n3. Update\n4. Delete\n5. Exit");
+                System.out.print("Choose: ");
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // clear newline
+
+                switch (choice) {
+                    case 1:
+                        addStudent();
+                        break;
+                    case 2:
+                        viewStudent();
+                        break;
+                    case 3:
+                        updateStudent();
+                        break;
+                    case 4:
+                        deleteStudent();
+                        break;
+                    case 5:
+                        System.out.println("Bye!");
+                        return;
+                    default:
+                        System.out.println("Invalid choice.");
+                }
+            }
+        }
+
+        static void addStudent() {
+            System.out.print("Name: ");
+            String name = scanner.nextLine();
+
+            System.out.print("Age: ");
+            int age = scanner.nextInt();
+            scanner.nextLine(); // clear newline
+
+            System.out.print("Gender: ");
+            String gender = scanner.nextLine();
+
+            System.out.print("Marks: ");
+            int marks = scanner.nextInt();
+            scanner.nextLine(); // clear newline
+
+            System.out.print("Email: ");
+            String email = scanner.nextLine();
+
+            System.out.print("Standard: ");
+            int standard = scanner.nextInt();
+            scanner.nextLine(); // clear newline
+
+            students.put(nextId, new Student(nextId, name, age, gender, marks, email, standard));
+            System.out.println("Added with ID: " + nextId);
+            nextId++;
+        }
+
+        static void viewStudent() {
+            System.out.print("Enter ID: ");
+            int id = scanner.nextInt();
+            scanner.nextLine(); // clear newline
+            Student s = students.get(id);
+            System.out.println(s != null ? s : "Student not found.");
+        }
+
+        static void updateStudent() {
+            System.out.print("Enter ID: ");
+            int id = scanner.nextInt();
+            scanner.nextLine(); // clear newline
+
+            Student s = students.get(id);
+            if (s != null) {
+                System.out.print("New Name: ");
+                s.name = scanner.nextLine();
+
+                System.out.print("New Age: ");
+                s.age = scanner.nextInt();
+                scanner.nextLine();
+
+                System.out.print("New Gender: ");
+                s.gender = scanner.nextLine();
+
+                System.out.print("New Marks: ");
+                s.marks = scanner.nextInt();
+                scanner.nextLine();
+
+                System.out.print("New Email: ");
+                s.email = scanner.nextLine();
+
+                System.out.print("New Standard: ");
+                s.standard = scanner.nextInt();
+                scanner.nextLine();
+
+                System.out.println("Updated.");
+            } else {
+                System.out.println("Student not found.");
+            }
+        }
+
+        static void deleteStudent() {
+            System.out.print("Enter ID: ");
+            int id = scanner.nextInt();
+            scanner.nextLine(); // clear newline
+            if (students.remove(id) != null) {
+                System.out.println("Deleted.");
+            } else {
+                System.out.println("Student not found.");
+            }
+        }
+    }
+
+
